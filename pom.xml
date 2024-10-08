@@ -4,6 +4,9 @@
   <groupId>org.lan</groupId>
   <artifactId>stock_parent</artifactId>
   <packaging>pom</packaging>
+  <modules>
+    <module>stock_common</module>
+  </modules>
   <version>1.0-SNAPSHOT</version>
   <name>stock_parent Maven Webapp</name>
   <url>http://maven.apache.org</url>
