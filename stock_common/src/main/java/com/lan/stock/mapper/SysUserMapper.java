@@ -1,6 +1,7 @@
 package com.lan.stock.mapper;
 
 import com.lan.stock.pojo.entity.SysUser;
+import org.apache.ibatis.annotations.Param;
 
 /**
 * @author lan
@@ -22,4 +23,5 @@ public interface SysUserMapper {
 
     int updateByPrimaryKey(SysUser record);
 
+    SysUser findUserInfoByUserName(@Param("userName") String userName);
 }
