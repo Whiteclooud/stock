@@ -2,12 +2,12 @@ package com.lan.stock.controller;
 
 import com.lan.stock.pojo.entity.SysUser;
 import com.lan.stock.service.Impl.UserServiceImpl;
+import com.lan.stock.vo.req.LoginReqVo;
+import com.lan.stock.vo.resp.LoginRespVo;
+import com.lan.stock.vo.resp.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author lan
@@ -32,5 +32,17 @@ public class UserController {
     @GetMapping("/user/{username}")
     public SysUser getUserByUserName(@PathVariable("username") String username){
         return userService.findByUserName(username);
+    }
+
+    /**
+     * @description: 登录
+     * @param:
+     * @return: R<LoginRespVo>
+     * @author lan
+     * @date: 2024/10/25 8:03
+     */
+    @PostMapping("/login")
+    public R<LoginRespVo> login(@RequestBody LoginReqVo vo){
+        return userService.login(vo);
     }
 }
