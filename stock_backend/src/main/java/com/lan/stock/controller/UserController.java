@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 /**
  * @author lan
  * @version 1.0
@@ -45,4 +47,18 @@ public class UserController {
     public R<LoginRespVo> login(@RequestBody LoginReqVo vo){
         return userService.login(vo);
     }
+
+    /** 
+     * @description: 生成图片验证码功能
+     * @param:  
+     * @return: com.lan.stock.vo.resp.R<java.util.Map> 
+     * @author lan
+     * @date: 2024/10/28 13:25
+     */
+    @GetMapping("/captcha")
+    public R<Map> getCaptchaCode(){
+
+        return userService.getCaptchaCode();
+    }
+
 }

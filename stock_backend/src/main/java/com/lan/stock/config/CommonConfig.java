@@ -1,5 +1,6 @@
 package com.lan.stock.config;
 
+import com.lan.stock.utils.IdWorker;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,5 +21,17 @@ public class CommonConfig {
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public IdWorker idWorker(){
+        /**
+         * @description: 基于雪花算法保证生成id唯一
+         * @param:  参数1：机器id，参数2：机房id
+         * @return: com.lan.stock.utils.IdWorker
+         * @author lan
+         * @date: 2024/10/28 13:22
+         */
+        return new IdWorker(1l, 2l);
     }
 }

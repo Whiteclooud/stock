@@ -5,6 +5,8 @@ import com.lan.stock.vo.req.LoginReqVo;
 import com.lan.stock.vo.resp.LoginRespVo;
 import com.lan.stock.vo.resp.R;
 
+import java.util.Map;
+
 public interface UserService {
 
     /**
@@ -24,4 +26,6 @@ public interface UserService {
      * @date: 2024/10/25 8:07
      */
     R<LoginRespVo> login(LoginReqVo vo);
+
+    R<Map> getCaptchaCode();
 }
