@@ -2,7 +2,7 @@ spring:
   # 配置缓存
   redis:
     host: localhost
-    port: 6380
+    port: 6379
     database: 1 #Redis数据库索引（默认为0）
     lettuce:
       pool:
@@ -11,4 +11,4 @@ spring:
         max-idle: 8 # 连接池中的最大空闲连接
         min-idle: 1  # 连接池中的最小空闲连接
     timeout: PT10S # 连接超时时间
-    password: 123456 # 配置redis密码
+    password: 111111 # 配置redis密码
