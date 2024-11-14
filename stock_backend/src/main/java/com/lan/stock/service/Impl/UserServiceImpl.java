@@ -2,6 +2,7 @@ package com.lan.stock.service.Impl;
 
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
+import com.lan.stock.constant.StockConstant;
 import com.lan.stock.mapper.SysUserMapper;
 import com.lan.stock.pojo.entity.SysUser;
 import com.lan.stock.service.UserService;
@@ -22,6 +23,7 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
 
 /**
  * @author lan
@@ -60,8 +62,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public R<LoginRespVo> login(LoginReqVo vo) {
         //1. 判断传入参数是否合法
-        if(vo == null || StringUtils.isBlank((vo.getUsername())) || StringUtils.isBlank((vo.getPassword())) || StringUtils.isBlank((vo.getCode())))
+        if(vo == null || StringUtils.isBlank((vo.getUsername())) || StringUtils.isBlank((vo.getPassword())))
             return R.error(ResponseCode.DATA_ERROR);
+        //判断输入的验证码是否存在
+        if(StringUtils.isBlank(vo.getCode()) || StringUtils.isBlank(vo.getSessionId()))
+            return R.error(ResponseCode.CHECK_CODE_ERROR);
+        //判断redis中保存的验证码与输入的验证码是否相同(比较时忽略大小写)
+        String redisCode = (String) redisTemplate.opsForValue().get(StockConstant.CHECK_PREFIX + vo.getSessionId());
+        if (StringUtils.isBlank(redisCode)) {
+            //验证码过期
+            return R.error(ResponseCode.CHECK_CODE_TIMEOUT);
+        }
+        if (!redisCode.equalsIgnoreCase(vo.getCode())) {
+            //验证码错误
+            return R.error(ResponseCode.CHECK_CODE_ERROR);
+        }
         //2.根据用户名去数据库查询密码的密文
         SysUser dbuser = sysUserMapper.findUserInfoByUserName(vo.getUsername());
         if(dbuser == null){
@@ -118,7 +133,7 @@ public class UserServiceImpl implements UserService {
         String sessionId = String.valueOf(idWorker.nextId());
         log.info("当前生成的校验码：{}，会话id：{}", checkCode, sessionId);
         //3、后台将sessionId作为key，校验码作为value，保存在redis中（调试成功后改为1分钟）
-        redisTemplate.opsForValue().set("CK:" + sessionId, checkCode, 5, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(StockConstant.CHECK_PREFIX + sessionId, checkCode, 5, TimeUnit.MINUTES);
         //4、组装数据
         HashMap<String, String> data = new HashMap();
         data.put("imageData", imageData);
