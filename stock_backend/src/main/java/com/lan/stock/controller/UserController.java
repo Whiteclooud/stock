@@ -37,7 +37,7 @@ public class UserController {
      */
     @GetMapping("/user/{username}")
     @ApiOperation(value = "根据用户名查询用户信息",notes = "用户信息查询",response = SysUser.class)
-    @ApiImplicitParam(paramType = "path",name = "userName",value = "用户名",required = true)
+    @ApiImplicitParam(paramType = "path",name = "username",value = "用户名",required = true)
     public SysUser getUserByUserName(@PathVariable("username") String username){
         return userService.findByUserName(username);
     }
