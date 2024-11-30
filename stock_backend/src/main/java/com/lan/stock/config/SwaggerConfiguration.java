@@ -31,7 +31,7 @@ public class SwaggerConfiguration {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(buildApiInfo())
                 .select()
-                // 要扫描的API(Controller)基础包
+//                 要扫描的API(Controller)基础包
                 .apis(RequestHandlerSelectors.basePackage("com.lan.stock.controller"))
                 .paths(PathSelectors.any())
                 .build();

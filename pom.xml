@@ -37,7 +37,7 @@
     <xxl-job-core.version>2.3.0</xxl-job-core.version>
     <spring-boot.version>2.5.3</spring-boot.version>
     <joda-time.version>2.10.5</joda-time.version>
-    <google.guava.version>30.0-jre</google.guava.version>
+    <google.guava.version>31.1-jre</google.guava.version>
     <knif4j.version>2.0.2</knif4j.version>
     <hutool.version>5.7.21</hutool.version>
   </properties>
