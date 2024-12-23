@@ -1,6 +1,7 @@
 package com.lan.stock.service;
 
 import com.lan.stock.pojo.domain.InnerMarketDomain;
+import com.lan.stock.pojo.domain.StockBlockDomain;
 import com.lan.stock.vo.resp.R;
 
 import java.util.List;
@@ -18,4 +19,11 @@ public interface StockService {
      * @return
      */
     R<List<InnerMarketDomain>> getInnerMarketInfo();
+
+    /**
+     * @author: lan
+     * @description: 获取沪深两市板块最新数据，以交易总金额降序查询，取前10条数据
+     * @date: 2024/12/23 20:13
+     */
+    R<List<StockBlockDomain>> sectorAllLimit();
 }

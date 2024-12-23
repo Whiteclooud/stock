@@ -1,6 +1,7 @@
 package com.lan.stock.mapper;
 
 import com.lan.stock.pojo.domain.InnerMarketDomain;
+import com.lan.stock.pojo.domain.StockBlockDomain;
 import com.lan.stock.pojo.entity.StockMarketIndexInfo;
 import org.apache.ibatis.annotations.Param;
 
@@ -36,4 +37,13 @@ public interface StockMarketIndexInfoMapper {
      * @return
      */
     List<InnerMarketDomain> getMarketInfo(@Param("curDate") Date curDate, @Param("marketCodes") List<String> marketCodes);
+
+    /**
+     * @author: lan
+     * @description: 沪深两市板块分时行情数据查询，以交易时间和交易总金额降序查询，取前10条数据
+     * @date: 2024/12/23 20:30
+     * @param timePoint 指定时间点
+     * @return
+     */
+    List<StockBlockDomain> sectorAllLimit(@Param("timePoint") Date timePoint);
 }

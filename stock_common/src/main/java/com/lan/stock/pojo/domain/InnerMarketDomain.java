@@ -10,7 +10,7 @@ import java.util.Date;
 
 /**
  * @author: lan
- * @description: 定义封装多内大盘数据的实体类
+ * @description: 定义封装国内大盘数据的实体类
  * @date: 2024/12/11 09:49
  */
 @ApiModel(description = "大盘数据")

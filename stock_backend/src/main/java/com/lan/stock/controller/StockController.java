@@ -2,6 +2,7 @@ package com.lan.stock.controller;
 
 
 import com.lan.stock.pojo.domain.InnerMarketDomain;
+import com.lan.stock.pojo.domain.StockBlockDomain;
 import com.lan.stock.service.StockService;
 import com.lan.stock.service.UserService;
 import com.lan.stock.vo.resp.R;
@@ -20,7 +21,7 @@ import java.util.List;
  * @description：定义股票相关接口控制器
  * @date ：2024/12/23 15:42
  */
-@Api(value = "api/quot", tags = {"股票相关接口控制器"})
+@Api(value = "api/quot", tags = {"定义股票相关接口控制器"})
 @RestController
 @RequestMapping("api/quot")
 public class StockController {
@@ -32,11 +33,22 @@ public class StockController {
      * @author: lan
      * @description: 获取国内大盘最新数据
      * @date: 2024/12/23 15:49
-     * @return
      */
     @ApiOperation(value = "获取国内大盘最新数据", notes = "获取国内大盘最新数据", httpMethod = "GET")
     @GetMapping("/index/all")
     public R<List<InnerMarketDomain>> getInnerMarketInfo() {
         return stockService.getInnerMarketInfo();
     }
+
+    /**
+     * @author: lan
+     * @description: 获取沪深两市板块最新数据，以交易总金额降序查询，取前10条数据
+     * @date: 2024/12/23 20:12
+     */
+    @ApiOperation(value = "获取沪深两市板块最新数据，以交易总金额降序查询，取前10条数据", notes = "获取沪深两市板块最新数据，以交易总金额降序查询，取前10条数据", httpMethod = "GET")
+    @GetMapping("/sector/all")
+    public R<List<StockBlockDomain>> sectorAll(){
+        return stockService.sectorAllLimit();
+    }
+
 }
