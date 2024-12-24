@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author ：lan
@@ -85,5 +86,16 @@ public class StockController {
     @GetMapping("/stock/increase")
     public R<List<StockUpdownDomain>> getMostIncreseStock(@RequestParam(value = "num", required = false, defaultValue = "4") Integer num){
         return stockService.getMostIncreseStock(num);
+    }
+
+    /**
+     * @author: lan
+     * @description: 统计最新交易日下股票每分钟涨跌停的数量
+     * @date: 2024/12/24 20:57
+     * @return
+     */
+    @GetMapping("/stock/updown/count")
+    public R<Map<String, List>> getStockUpdownCount(){
+        return stockService.getStockUpdownCount();
     }
 }

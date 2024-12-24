@@ -7,6 +7,7 @@ import com.lan.stock.vo.resp.PageResult;
 import com.lan.stock.vo.resp.R;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: lan
@@ -44,4 +45,12 @@ public interface StockService {
      * @return
      */
     R<List<StockUpdownDomain>> getMostIncreseStock(Integer num);
+
+    /**
+     * @author: lan
+     * @description: 统计最新交易日下股票每分钟涨跌停的数量
+     * @date: 2024/12/24 20:57
+     * @return
+     */
+    R<Map<String, List>> getStockUpdownCount();
 }

@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.lan.stock.mapper.StockBlockRtInfoMapper;
 import com.lan.stock.mapper.StockMarketIndexInfoMapper;
+import com.lan.stock.mapper.StockRtInfoMapper;
 import com.lan.stock.pojo.domain.InnerMarketDomain;
 import com.lan.stock.pojo.domain.StockBlockDomain;
 import com.lan.stock.pojo.domain.StockUpdownDomain;
@@ -19,7 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @description：股票服务实现
@@ -36,6 +39,9 @@ public class StockServiceImpl implements StockService {
 
     @Autowired
     private StockBlockRtInfoMapper stockBlockRtInfoMapper;
+
+    @Autowired
+    private StockRtInfoMapper stockRtInfoMapper;
 
 
 
@@ -95,7 +101,7 @@ public class StockServiceImpl implements StockService {
         //2、设置分页参数
         PageHelper.startPage(page, pageSize);
         //3、调用mapper接口获取数据
-        List<StockUpdownDomain> pageData = stockBlockRtInfoMapper.getStockInfoByTime(lastDate);
+        List<StockUpdownDomain> pageData = stockRtInfoMapper.getStockInfoByTime(lastDate);
         //4、组装PaegResult数据
         PageInfo<StockUpdownDomain> pageInfo = new PageInfo<>(pageData);
         PageResult<StockUpdownDomain> pageResult = new PageResult<StockUpdownDomain>(pageInfo);
@@ -116,8 +122,35 @@ public class StockServiceImpl implements StockService {
         //mock数据，后续删除
         lastDate=DateTime.parse("2021-12-30 09:42:00", DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")).toDate();
         //2、调用mapper接口，获取数据
-        List<StockUpdownDomain> topStockInfo = stockBlockRtInfoMapper.getFisrstNStockInfoByTime(lastDate);
+        List<StockUpdownDomain> topStockInfo = stockRtInfoMapper.getFisrstNStockInfoByTime(lastDate);
         //3、相应数据
         return R.ok(topStockInfo);
+    }
+
+    /**
+     * @author: lan
+     * @description: 统计最新交易日下股票每分钟涨跌停的数量
+     * @date: 2024/12/24 20:57
+     * @return
+     */
+    @Override
+    public R<Map<String, List>> getStockUpdownCount() {
+        //1、获取最新股票的交易时间点(截止时间)
+        DateTime curDateTime = DateTimeUtil.getLastDate4Stock(DateTime.now());
+        //mock数据，后续删除
+        curDateTime = DateTime.parse("2022-01-06 14:25:00", DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
+        //mock/
+        Date closeDate = curDateTime.toDate();
+        //获取最新股票的交易时间点(开盘时间)
+        Date startDate = DateTimeUtil.getOpenDate(curDateTime).toDate();
+        //3、统计涨停数据
+        List upList = stockRtInfoMapper.getStockUpdownCount(startDate, closeDate,1);
+        //4、统计跌停
+        List downList = stockRtInfoMapper.getStockUpdownCount(startDate, closeDate,0);
+        //5、组装数据
+        HashMap<String, List> info = new HashMap<>();
+        info.put("upList", upList);
+        info.put("downList", downList);
+        return R.ok(info);
     }
 }
