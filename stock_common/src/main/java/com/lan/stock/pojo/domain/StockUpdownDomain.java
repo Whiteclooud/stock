@@ -17,7 +17,7 @@ import java.util.Date;
  * @description：股票涨跌信息
  * @date ：2024/12/24 15:28
  */
-@ApiModel(description = "：股票涨跌信息")
+@ApiModel(description = "股票涨跌信息")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

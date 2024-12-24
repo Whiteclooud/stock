@@ -17,7 +17,7 @@ import java.util.Date;
  * @description：定义封装板块数据的实体类
  * @date ：2024/12/23 20:07
  */
-@ApiModel(description = "TODO")
+@ApiModel(description = "大盘信息")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

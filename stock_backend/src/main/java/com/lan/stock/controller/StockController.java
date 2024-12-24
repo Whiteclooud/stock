@@ -74,4 +74,16 @@ public class StockController {
                                                                @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize){
         return stockService.getStockInfoByPage(page, pageSize);
     }
+    
+    /**
+     * @author: lan
+     * @description: 统计沪深两市个股最新交易数据，并按涨幅降序排序查询前4条数据
+     * @date: 2024/12/24 19:01
+     * @return
+     */
+    @ApiOperation(value = "统计沪深两市个股最新交易数据，并按涨幅降序排序查询前4条数据", notes = "统计沪深两市个股最新交易数据，并按涨幅降序排序查询前4条数据", httpMethod = "GET")
+    @GetMapping("/stock/increase")
+    public R<List<StockUpdownDomain>> getMostIncreseStock(@RequestParam(value = "num", required = false, defaultValue = "4") Integer num){
+        return stockService.getMostIncreseStock(num);
+    }
 }

@@ -102,4 +102,22 @@ public class StockServiceImpl implements StockService {
         //5、响应数据
         return R.ok(pageResult);
     }
+
+    /**
+     * @return
+     * @author: lan
+     * @description: 统计沪深两市个股最新交易数据，并按涨幅降序排序查询前4条数据
+     * @date: 2024/12/24 19:01
+     */
+    @Override
+    public R<List<StockUpdownDomain>> getMostIncreseStock(Integer num) {
+        //1、获取当前时间
+        Date lastDate = DateTimeUtil.getLastDate4Stock(DateTime.now()).toDate();
+        //mock数据，后续删除
+        lastDate=DateTime.parse("2021-12-30 09:42:00", DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")).toDate();
+        //2、调用mapper接口，获取数据
+        List<StockUpdownDomain> topStockInfo = stockBlockRtInfoMapper.getFisrstNStockInfoByTime(lastDate);
+        //3、相应数据
+        return R.ok(topStockInfo);
+    }
 }

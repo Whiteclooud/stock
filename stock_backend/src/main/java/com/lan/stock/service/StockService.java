@@ -36,4 +36,12 @@ public interface StockService {
      * @return 
      */
     R<PageResult<StockUpdownDomain>> getStockInfoByPage(Integer page, Integer pageSize);
+
+    /**
+     * @author: lan
+     * @description: 统计沪深两市个股最新交易数据，并按涨幅降序排序查询前4条数据
+     * @date: 2024/12/24 19:01
+     * @return
+     */
+    R<List<StockUpdownDomain>> getMostIncreseStock(Integer num);
 }

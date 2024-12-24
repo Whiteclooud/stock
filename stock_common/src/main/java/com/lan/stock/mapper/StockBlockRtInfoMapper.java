@@ -45,4 +45,12 @@ public interface StockBlockRtInfoMapper {
      * @return
      */
     List<StockUpdownDomain> getStockInfoByTime(@Param("lastDate") Date lastDate);
+
+    /**
+     * @author: lan
+     * @description: 查询前n个指定时间点的股票交易数据,并根据涨幅降序排序
+     * @date: 2024/12/24 19:09
+     * @return
+     */
+    List<StockUpdownDomain> getFisrstNStockInfoByTime(@Param("lastDate") Date lastDate);
 }
