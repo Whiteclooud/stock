@@ -2,6 +2,8 @@ package com.lan.stock.service;
 
 import com.lan.stock.pojo.domain.InnerMarketDomain;
 import com.lan.stock.pojo.domain.StockBlockDomain;
+import com.lan.stock.pojo.domain.StockUpdownDomain;
+import com.lan.stock.vo.resp.PageResult;
 import com.lan.stock.vo.resp.R;
 
 import java.util.List;
@@ -26,4 +28,12 @@ public interface StockService {
      * @date: 2024/12/23 20:13
      */
     R<List<StockBlockDomain>> sectorAllLimit();
+
+    /**
+     * @author: lan
+     * @description: 分页查询最新的股票交易数据
+     * @date: 2024/12/24 16:47
+     * @return 
+     */
+    R<PageResult<StockUpdownDomain>> getStockInfoByPage(Integer page, Integer pageSize);
 }

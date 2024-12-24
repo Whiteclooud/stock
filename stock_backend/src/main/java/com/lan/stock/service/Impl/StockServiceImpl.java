@@ -1,13 +1,17 @@
 package com.lan.stock.service.Impl;
 
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.lan.stock.mapper.StockBlockRtInfoMapper;
 import com.lan.stock.mapper.StockMarketIndexInfoMapper;
 import com.lan.stock.pojo.domain.InnerMarketDomain;
 import com.lan.stock.pojo.domain.StockBlockDomain;
+import com.lan.stock.pojo.domain.StockUpdownDomain;
 import com.lan.stock.pojo.vo.StockInfoConfig;
 import com.lan.stock.service.StockService;
 import com.lan.stock.utils.DateTimeUtil;
+import com.lan.stock.vo.resp.PageResult;
 import com.lan.stock.vo.resp.R;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -32,6 +36,9 @@ public class StockServiceImpl implements StockService {
 
     @Autowired
     private StockBlockRtInfoMapper stockBlockRtInfoMapper;
+
+
+
 
     /**
      * @author: lan
@@ -68,8 +75,31 @@ public class StockServiceImpl implements StockService {
         //mock数据，后续删除
         lastDate=DateTime.parse("2021-12-21 14:30:00", DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")).toDate();
         //2、调用mapper接口获取数据
-        List<StockBlockDomain> infos = stockMarketIndexInfoMapper.sectorAllLimit(lastDate);
+        List<StockBlockDomain> infos = stockBlockRtInfoMapper.sectorAllLimit(lastDate);
         //3、组装数据
         return R.ok(infos);
+    }
+
+    /**
+     * @author: lan
+     * @description: 分页查询最新的股票交易数据
+     * @date: 2024/12/24 16:48
+     * @return
+     */
+    @Override
+    public R<PageResult<StockUpdownDomain>> getStockInfoByPage(Integer page, Integer pageSize) {
+        //1、获取最新的股票交易时间点
+        Date lastDate = DateTimeUtil.getLastDate4Stock(DateTime.now()).toDate();
+        //mock数据，后续删除
+        lastDate=DateTime.parse("2021-12-30 09:42:00", DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")).toDate();
+        //2、设置分页参数
+        PageHelper.startPage(page, pageSize);
+        //3、调用mapper接口获取数据
+        List<StockUpdownDomain> pageData = stockBlockRtInfoMapper.getStockInfoByTime(lastDate);
+        //4、组装PaegResult数据
+        PageInfo<StockUpdownDomain> pageInfo = new PageInfo<>(pageData);
+        PageResult<StockUpdownDomain> pageResult = new PageResult<StockUpdownDomain>(pageInfo);
+        //5、响应数据
+        return R.ok(pageResult);
     }
 }

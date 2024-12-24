@@ -1,6 +1,12 @@
 package com.lan.stock.mapper;
 
+import com.lan.stock.pojo.domain.StockBlockDomain;
+import com.lan.stock.pojo.domain.StockUpdownDomain;
 import com.lan.stock.pojo.entity.StockBlockRtInfo;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Date;
+import java.util.List;
 
 /**
 * @author lan
@@ -22,4 +28,21 @@ public interface StockBlockRtInfoMapper {
 
     int updateByPrimaryKey(StockBlockRtInfo record);
 
+    /**
+     * @author: lan
+     * @description: 沪深两市板块分时行情数据查询，以交易时间和交易总金额降序查询，取前10条数据
+     * @date: 2024/12/23 20:30
+     * @param timePoint 指定时间点
+     * @return
+     */
+    List<StockBlockDomain> sectorAllLimit(@Param("timePoint") Date timePoint);
+
+    /**
+     * @author: lan
+     * @description: 查询指定时间点的股票交易数据,并根据涨幅降序排序
+     * @date: 2024/12/24 17:13
+     * @param lastDate 日期时间
+     * @return
+     */
+    List<StockUpdownDomain> getStockInfoByTime(@Param("lastDate") Date lastDate);
 }
