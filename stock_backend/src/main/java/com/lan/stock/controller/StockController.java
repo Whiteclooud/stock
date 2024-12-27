@@ -82,6 +82,9 @@ public class StockController {
      * @date: 2024/12/24 19:01
      * @return
      */
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", dataType = "int", name = "num", value = "")
+    })
     @ApiOperation(value = "统计沪深两市个股最新交易数据，并按涨幅降序排序查询前4条数据", notes = "统计沪深两市个股最新交易数据，并按涨幅降序排序查询前4条数据", httpMethod = "GET")
     @GetMapping("/stock/increase")
     public R<List<StockUpdownDomain>> getMostIncreseStock(@RequestParam(value = "num", required = false, defaultValue = "4") Integer num){
@@ -94,8 +97,9 @@ public class StockController {
      * @date: 2024/12/24 20:57
      * @return
      */
+    @ApiOperation(value = ": 统计最新交易日下股票每分钟涨跌停的数量", notes = ": 统计最新交易日下股票每分钟涨跌停的数量", httpMethod = "GET")
     @GetMapping("/stock/updown/count")
-    public R<Map<String, List>> getStockUpdownCount(){
-        return stockService.getStockUpdownCount();
+    public R<Map<String, List>> getStockUpDownCount(){
+        return stockService.getStockUpDownCount();
     }
 }

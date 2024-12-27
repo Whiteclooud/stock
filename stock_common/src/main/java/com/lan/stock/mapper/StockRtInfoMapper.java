@@ -54,5 +54,5 @@ public interface StockRtInfoMapper {
      * @return
      */
     @MapKey("time")
-    List<Map> getStockUpdownCount(@Param("startDate") Date startDate, @Param("closeDate") Date closeDate, @Param("flag") int flag);
+    List<Map> getStockUpDownCount(@Param("startDate") Date startDate, @Param("closeDate") Date closeDate, @Param("flag") int flag);
 }

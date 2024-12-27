@@ -52,5 +52,5 @@ public interface StockService {
      * @date: 2024/12/24 20:57
      * @return
      */
-    R<Map<String, List>> getStockUpdownCount();
+    R<Map<String, List>> getStockUpDownCount();
 }

@@ -134,7 +134,7 @@ public class StockServiceImpl implements StockService {
      * @return
      */
     @Override
-    public R<Map<String, List>> getStockUpdownCount() {
+    public R<Map<String, List>> getStockUpDownCount() {
         //1、获取最新股票的交易时间点(截止时间)
         DateTime curDateTime = DateTimeUtil.getLastDate4Stock(DateTime.now());
         //mock数据，后续删除
@@ -144,9 +144,9 @@ public class StockServiceImpl implements StockService {
         //获取最新股票的交易时间点(开盘时间)
         Date startDate = DateTimeUtil.getOpenDate(curDateTime).toDate();
         //3、统计涨停数据
-        List upList = stockRtInfoMapper.getStockUpdownCount(startDate, closeDate,1);
+        List upList = stockRtInfoMapper.getStockUpDownCount(startDate, closeDate,1);
         //4、统计跌停
-        List downList = stockRtInfoMapper.getStockUpdownCount(startDate, closeDate,0);
+        List downList = stockRtInfoMapper.getStockUpDownCount(startDate, closeDate,0);
         //5、组装数据
         HashMap<String, List> info = new HashMap<>();
         info.put("upList", upList);
